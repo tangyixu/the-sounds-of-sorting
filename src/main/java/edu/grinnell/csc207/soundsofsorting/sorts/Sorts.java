@@ -188,7 +188,9 @@ public class Sorts {
             }
             result.addAll(mergeSort(left));
             result.addAll(mergeSort(right));
-            result.addAll(merge(left, right));
+            List<SortEvent<T>> mergeE = merge(left, right);
+            eventSort(arr, mergeE);
+            result.addAll(mergeE);
             //System.arraycopy(merged, 0, arr, 0, merged.length);
         }
         return result;
@@ -249,11 +251,11 @@ public class Sorts {
             //System.arraycopy(arr, 0, left, 0, pivot);
             //System.arraycopy(arr, pivot + 1, right, 0, arr.length - pivot - 1);
             for (int n = 0; n < arr.length; n++) {
-                if (n <= pivot) {
+                if (n < pivot) {
                     CopyEvent<T> copyE = new CopyEvent<>(n, left[n]);
                     result.add(copyE);
-                } else {
-                    CopyEvent<T> copyE = new CopyEvent<>(n, right[n - pivot]);
+                } else if (n > pivot) {
+                    CopyEvent<T> copyE = new CopyEvent<>(n, right[n - pivot - 1]);
                     result.add(copyE);
                 }
             }
