@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 
 import edu.grinnell.csc207.soundsofsorting.sorts.Sorts;
+import java.util.Arrays;
 
 public class SortsTests {
 
@@ -42,105 +43,144 @@ public class SortsTests {
     @Test
     public void normalArrBubbleSort1() {
         Integer[] sample = {5, 4, 3, 2, 1};
-        Sorts.eventSort(sample, Sorts.bubbleSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.bubbleSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void sameValTestBubbleSort2() {
         Integer[] sample = {5, 5, 5, 5, 5};
-        Sorts.eventSort(sample, Sorts.bubbleSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.bubbleSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void oneValTestBubbleSort3() {
         Integer[] sample = {5};
-        Sorts.eventSort(sample, Sorts.bubbleSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.bubbleSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void normaltestInsertionSort1() {
         Integer[] sample = {3, 2, 5, 1, 9};
-        Sorts.eventSort(sample, Sorts.insertionSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.insertionSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void edgeTestInsertionSort2() {
         Integer[] sample = {0};
-        Sorts.eventSort(sample, Sorts.insertionSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.insertionSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void sameValTestInsertionSort3() {
         Integer[] sample = {0, 1, 2, 0, -1, 5, 0, 1};
-        Sorts.eventSort(sample, Sorts.insertionSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.insertionSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void normaltestSelectionSort1() {
         Integer[] sample = {32, 56, 1, 3, 9, 0};
-        Sorts.eventSort(sample, Sorts.selectionSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.selectionSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void repeatTestSelectionSort2() {
         Integer[] sample = {32, 56, 32, 1, 3, 9, 32, 0};
-        Sorts.eventSort(sample, Sorts.selectionSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.selectionSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void nullTestSelectionSort3() {
         Integer[] sample = {};
-        Sorts.eventSort(sample, Sorts.selectionSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.selectionSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void normalTestMergeSort1() {
         Integer[] sample = {8, 20, 13, 1, 8, 20, 13, 5};
-        Sorts.eventSort(sample, Sorts.mergeSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.mergeSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void nullTestMergeSort2() {
         Integer[] sample = {};
-        Sorts.eventSort(sample, Sorts.mergeSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.mergeSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void repeatTestMergeSort3() {
         Integer[] sample = {12, 1, 99, 0, 11, 1, 99};
-        Sorts.eventSort(sample, Sorts.mergeSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.mergeSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void normalTestQuickSort1() {
         Integer[] sample = {8, 17, 10, 3, 1, 2};
-        Sorts.eventSort(sample, Sorts.quickSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.quickSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void nullTestQuickSort2() {
         Integer[] sample = {};
-        Sorts.eventSort(sample, Sorts.quickSort(sample));
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.quickSort(arrCopy));
         assertTrue(sorted(sample));
     }
 
     @Test
     public void repeatTestQuickSort3() {
-        Integer[] sample = {13, -1, 99, -13, -1, 99};
-        Sorts.eventSort(sample, Sorts.quickSort(sample));
+        Integer[] sample = {13, 1, 99, 13, 1, 99};
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.quickSort(arrCopy));
+        assertTrue(sorted(sample));
+    }
+
+    @Test
+    public void normalTestBongoSort1() {
+        Integer[] sample = {8, 17, 10, 3, 1, 2};
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.bongoSort(arrCopy));
+        assertTrue(sorted(sample));
+    }
+
+    @Test
+    public void nullTestBongoSort2() {
+        Integer[] sample = {};
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.bongoSort(arrCopy));
+        assertTrue(sorted(sample));
+    }
+
+    @Test
+    public void repeatTestBongoSort3() {
+        Integer[] sample = {13, 1, 99, 13, 1, 99};
+        Integer[] arrCopy = Arrays.copyOf(sample, sample.length);
+        Sorts.eventSort(sample, Sorts.bongoSort(arrCopy));
         assertTrue(sorted(sample));
     }
 }

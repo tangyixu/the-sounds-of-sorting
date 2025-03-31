@@ -11,8 +11,8 @@ import java.util.List;
 public class CopyEvent<T> implements SortEvent<T> {
 
     private List<Integer> affectedIndices;
-    private int curIndex;
-    private T value;
+    public int curIndex;
+    public T value;
 
     /**
      * Construct a new copyEvent.
