@@ -52,4 +52,12 @@ public class CopyEvent<T> implements SortEvent<T> {
     public boolean isEmphasized() {
         return true;
     }
+
+    /**
+     *
+     * @return The value recorded.
+     */
+    public T getValue() {
+        return this.value;
+    }
 }
