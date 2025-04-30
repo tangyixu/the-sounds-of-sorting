@@ -3,6 +3,7 @@
 Author: Tiffany Tang
 
 ## Resources
+* JDK-23 and NetBeans are used for this project.
 
 * This project is instruced by:
 https://osera.cs.grinnell.edu/ttap/data-structures-labs/the-sounds-of-sorting.html
