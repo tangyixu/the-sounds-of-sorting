@@ -45,10 +45,10 @@ public class Sorts {
         for (int n = arr.length - 1; n > 0; n--) {
             for (int m = 0; m < n; m++) {
                 if (arr[m].compareTo(arr[m + 1]) > 0) {
-                    //swap(arr, m, m + 1);
                     CompareEvent<T> comE = new CompareEvent<>(m, m + 1);
-                    SwapEvent<T> swapE = new SwapEvent<>(m, m + 1);
                     result.add(comE);
+                    SwapEvent<T> swapE = new SwapEvent<>(m, m + 1);
+                    swap(arr, m, m + 1);
                     result.add(swapE);
                 }
             }
