@@ -124,33 +124,34 @@ public class Sorts {
      * @return a list of sorted events
      */
     public static <T extends Comparable<? super T>> List<SortEvent<T>> merge(T[] arr1, T[] arr2) {
-        //T[] result = (T[]) new Comparable[arr1.length + arr2.length];
+        T[] result = (T[]) new Comparable[arr1.length + arr2.length];
         List<SortEvent<T>> sortE = new ArrayList<>();
-        if (arr1.length != 0 && arr2.length != 0) {
-            int i = 0, j = 0, k = 0;
-            while (i < arr1.length && j < arr2.length) {
-                CompareEvent<T> comE = new CompareEvent<>(i, j + arr1.length);
-                sortE.add(comE);
-                if (arr1[i].compareTo(arr2[j]) <= 0) {
-                    //result[k++] = arr1[i++];
-                    CopyEvent<T> copyE = new CopyEvent<>(k++, arr1[i++]);
-                    sortE.add(copyE);
-                } else {
-                    //result[k++] = arr2[j++];
-                    CopyEvent<T> copyE = new CopyEvent<>(k++, arr2[j++]);
-                    sortE.add(copyE);
-                }
+        int i = 0, j = 0, k = 0;
+        while (i < arr1.length && j < arr2.length) {
+            CompareEvent<T> comE = new CompareEvent<>(i, j + arr1.length);
+            sortE.add(comE);
+            if (arr1[i].compareTo(arr2[j]) <= 0) {
+                result[k] = arr1[i];
+                sortE.add(new CopyEvent<>(k, arr1[i]));
+                i++;
+            } else {
+                result[k] = arr2[j];
+                sortE.add(new CopyEvent<>(k, arr2[j]));
+                j++;
             }
-            while (i < arr1.length) {
-                //result[k++] = arr1[i++];
-                CopyEvent<T> copyE = new CopyEvent<>(k++, arr1[i++]);
-                sortE.add(copyE);
-            }
-            while (j < arr2.length) {
-                //result[k++] = arr2[j++];
-                CopyEvent<T> copyE = new CopyEvent<>(k++, arr2[j++]);
-                sortE.add(copyE);
-            }
+            k++;
+        }
+        while (i < arr1.length) {
+            result[k] = arr1[i];
+            sortE.add(new CopyEvent<>(k, arr1[i]));
+            i++;
+            k++;
+        }
+        while (j < arr2.length) {
+            result[k] = arr2[j];
+            sortE.add(new CopyEvent<>(k, arr2[j]));
+            j++;
+            k++;
         }
         return sortE;
     }
@@ -174,17 +175,13 @@ public class Sorts {
             for (int n = 0; n < arr.length; n++) {
                 if (n < mid) {
                     left[n] = arr[n];
-                    CopyEvent<T> copyE = new CopyEvent<>(n, arr[n]);
-                    result.add(copyE);
+                    //CopyEvent<T> copyE = new CopyEvent<>(n, arr[n]);
+                    //result.add(copyE);
                 } else {
                     right[n - mid] = arr[n];
-                    CopyEvent<T> copyE = new CopyEvent<>(n - mid, arr[n]);
-                    result.add(copyE);
+                    //CopyEvent<T> copyE = new CopyEvent<>(n - mid, arr[n]);
+                    //result.add(copyE);
                 }
-            }
-            for (int n = 0; n < arr.length; n++) {
-                CopyEvent<T> copyE = new CopyEvent<>(n, arr[n]);
-                result.add(copyE);
             }
             result.addAll(mergeSort(left));
             result.addAll(mergeSort(right));
@@ -208,21 +205,20 @@ public class Sorts {
         if (arr.length != 0) {
             int i = -1;
             int j = 0;
-            T pivot;
+            T pivot = arr[arr.length - 1];
 
-            pivot = arr[arr.length - 1];
             while (j < arr.length - 1) {
                 CompareEvent<T> comE = new CompareEvent<>(j, arr.length - 1);
                 sortE.add(comE);
                 if (arr[j].compareTo(pivot) <= 0) {
                     i++;
-                    //swap(arr, i, j);
+                    swap(arr, i, j);
                     SwapEvent<T> swapE = new SwapEvent<>(i, j);
                     sortE.add(swapE);
                 }
                 j++;
             }
-            //swap(arr, i + 1, arr.length - 1);
+            swap(arr, i + 1, arr.length - 1);
             SwapEvent<T> swapE = new SwapEvent<>(i + 1, arr.length - 1);
             sortE.add(swapE);
             //return i + 1;
@@ -250,13 +246,20 @@ public class Sorts {
             T[] right = (T[]) new Comparable[arr.length - pivot - 1];
             //System.arraycopy(arr, 0, left, 0, pivot);
             //System.arraycopy(arr, pivot + 1, right, 0, arr.length - pivot - 1);
+//            for (int n = 0; n < arr.length; n++) {
+//                if (n < pivot) {
+//                    CopyEvent<T> copyE = new CopyEvent<>(n, left[n]);
+//                    result.add(copyE);
+//                } else if (n > pivot) {
+//                    CopyEvent<T> copyE = new CopyEvent<>(n, right[n - pivot - 1]);
+//                    result.add(copyE);
+//                }
+//            }
             for (int n = 0; n < arr.length; n++) {
                 if (n < pivot) {
-                    CopyEvent<T> copyE = new CopyEvent<>(n, left[n]);
-                    result.add(copyE);
+                    left[n] = arr[n];
                 } else if (n > pivot) {
-                    CopyEvent<T> copyE = new CopyEvent<>(n, right[n - pivot - 1]);
-                    result.add(copyE);
+                    right[n - pivot - 1] = arr[n];
                 }
             }
             result.addAll(quickSort(left));
@@ -280,14 +283,15 @@ public class Sorts {
         while (true) {
             for (int n = 0; n < arr.length; n++) {
                 int random = (int) (Math.random() * arr.length);
+                swap(hold, random, n);
                 SwapEvent<T> swapE = new SwapEvent<>(random, n);
                 sortE.add(swapE);
             }
-            eventSort(hold, sortE);
+            //eventSort(hold, sortE);
             if (Sorts.sorted(hold)) {
                 break;
             }
-            sortE.clear();
+            //sortE.clear();
         }
         return sortE;
     }
