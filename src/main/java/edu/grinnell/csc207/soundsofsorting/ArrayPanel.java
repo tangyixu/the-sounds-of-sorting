@@ -17,8 +17,8 @@ public class ArrayPanel extends JPanel {
     /**
      * Create a new <code>ArrayPanel</code> with the given notes and dimensions.
      *
-     * @param notes the note indices
-     * @param width the width of the panel
+     * @param notes  the note indices
+     * @param width  the width of the panel
      * @param height the height of the panel
      */
     public ArrayPanel(NoteIndices notes, int width, int height) {
@@ -47,7 +47,7 @@ public class ArrayPanel extends JPanel {
         super.paintComponent(g);
         int unitWidth = (int) (getWidth() / this.notes.getNotes().length);
         Integer[] bars = notes.getNotes();
-        int unitHeight = 15;
+        int unitHeight = (int) (getHeight() / max(bars));
         for (int n = 0; n < bars.length; n++) {
             if (this.notes.isHighlighted(n)) {
                 g.setColor(Color.YELLOW);
