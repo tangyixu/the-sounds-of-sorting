@@ -27,17 +27,17 @@ public class ControlPanel extends JPanel {
     /**
      * The MIDI note values for the B minor pentatonic scale
      */
-    public static final int[] bMinorPentatonicValues
-            = new int[]{46, 49, 51, 53, 56, 58, 61, 63, 65, 68, 70, 73, 75, 78, 82, 85, 87};
+    public static final int[] bMinorPentatonicValues = new int[]{46, 49, 51,
+        53, 56, 58, 61, 63, 65, 68, 70, 73, 75,
+        78, 82, 85, 87};
 
     /**
      * The MIDI note values for the chromatic scale
      */
-    public static final int[] chromaticValues
-            = new int[]{40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
-                50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
-                60, 61, 62, 63, 64, 65, 66, 67, 68, 69,
-                70, 71, 72, 73, 74, 75, 76, 77, 78, 79};
+    public static final int[] chromaticValues = new int[]{40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+        50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
+        60, 61, 62, 63, 64, 65, 66, 67, 68, 69,
+        70, 71, 72, 73, 74, 75, 76, 77, 78, 79};
 
     /**
      * Generates a list of sorting events by sorting the given array using the
@@ -60,7 +60,7 @@ public class ControlPanel extends JPanel {
             case ("Quick"):
                 return Sorts.quickSort(arr);
             case ("Bongo"):
-                return Sorts.bongoSort(arr); //add my own sort
+                return Sorts.bongoSort(arr); // add my own sort
             default:
                 throw new IllegalArgumentException("generateEvents");
         }
@@ -151,12 +151,14 @@ public class ControlPanel extends JPanel {
                 // 1. Create the sorting events list
                 // 2. Add in the compare events to the end of the list
                 Integer[] noteIndices = notes.getNotes();
-                List<SortEvent<Integer>> events = generateEvents((String) sorts.getSelectedItem(), noteIndices);
+                Integer[] indicesCopy = noteIndices.clone();
+                List<SortEvent<Integer>> events = generateEvents((String) sorts.getSelectedItem(),
+                        indicesCopy);
                 // NOTE: The Timer class repetitively invokes a method at a
-                //       fixed interval.  Here we are specifying that method
-                //       by creating an _anonymous subclass_ of the TimeTask
-                //       class. You can interpret the run() method as the
-                //       method that fires on every "tick" of the program.
+                // fixed interval. Here we are specifying that method
+                // by creating an _anonymous subclass_ of the TimeTask
+                // class. You can interpret the run() method as the
+                // method that fires on every "tick" of the program.
                 Timer timer = new Timer();
                 timer.schedule(new TimerTask() {
                     private int index = 0;
@@ -168,12 +170,13 @@ public class ControlPanel extends JPanel {
                             // TODO: fill me in!
                             // 1. Apply the next sort event.
                             // 3. Play the corresponding notes denoted by the
-                            //    affected indices logged in the event.
+                            // affected indices logged in the event.
                             // 4. Highlight those affected indices.
+                            e.apply(noteIndices);
+                            notes.clearAllHighlighted();
                             List<Integer> affectedIndices = e.getAffectedIndices();
-                            e.apply(notes.getNotes());
                             for (int n = 0; n < noteIndices.length; n++) {
-                                if (affectedIndices.contains(noteIndices[n])) {
+                                if (affectedIndices.contains(n)) {
                                     scale.playNote(n, e.isEmphasized());
                                     notes.highlightNote(n);
                                 }

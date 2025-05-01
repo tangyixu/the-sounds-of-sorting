@@ -54,7 +54,6 @@ public class CopyEvent<T> implements SortEvent<T> {
     }
 
     /**
-     *
      * @return The value recorded.
      */
     public T getValue() {

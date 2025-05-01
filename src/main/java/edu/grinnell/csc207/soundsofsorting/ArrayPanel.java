@@ -46,15 +46,16 @@ public class ArrayPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         int unitWidth = (int) (getWidth() / this.notes.getNotes().length);
-        Integer[] bars = this.notes.getNotes();
-        int unitHeight = getHeight() / max(bars);
+        Integer[] bars = notes.getNotes();
+        int unitHeight = 15;
         for (int n = 0; n < bars.length; n++) {
-            if (this.notes.isHighlighted(bars[n])) {
+            if (this.notes.isHighlighted(n)) {
                 g.setColor(Color.YELLOW);
             } else {
-                g.setColor(Color.GRAY);
+                g.setColor(Color.BLUE);
             }
-            g.fillRect(n * unitWidth, getHeight() - bars[n], unitWidth, bars[n] * unitHeight);
+            g.fillRect(n * unitWidth, getHeight() - bars[n] * unitHeight,
+                    unitWidth, bars[n] * unitHeight);
         }
     }
 }
